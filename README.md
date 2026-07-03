@@ -11,6 +11,22 @@ hermes profile install github.com/kamilarndt/pm --alias
 
 Po instalacji skopiuj `.env.EXAMPLE` do `.env` i uzupełnij klucze API.
 
+### Konfiguracja pamięci (mem0)
+
+Profil używa `mem0` do pamięci. Po instalacji stwórz `mem0.json`:
+
+```bash
+cp ~/.hermes/profiles/pm/mem0.json ~/.hermes/profiles/pm/mem0.json 2>/dev/null || true
+# Jeśli nie istnieje, utwórz z domyślną konfiguracją:
+# {
+#   "mode": "oss",
+#   "user_id": "profile-pm",
+#   "agent_id": "pm"
+# }
+```
+
+Upewnij się że `user_id` jest UNIKALNY (`profile-pm`).
+
 ## Użycie
 
 ```bash
