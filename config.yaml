@@ -111,13 +111,15 @@ custom_providers:
       auto/smart:
         desc: 🤖 Routing przez smart provider
 
-      # DeepSeek (opencode-go + opencode-zen free)
+      # DeepSeek (opencode-go + opencode-zen free + if)
       opencode-go/deepseek-v4-pro:
         desc: 🟠 DeepSeek V4 Pro — mocny reasoning
       opencode-go/deepseek-v4-flash:
         desc: 🟠 DeepSeek V4 Flash — szybki, codzienna praca
       if/deepseek-v3.2:
         desc: 🟠 DeepSeek V3.2 — alternatywa
+      if/deepseek-r1:
+        desc: 🟠 DeepSeek R1 — reasoning krok po kroku
       opencode-zen/deepseek-v4-flash-free:
         desc: 🆓 DeepSeek V4 Flash — darmowy
 
@@ -147,6 +149,50 @@ custom_providers:
       opencode-zen/minimax-m2.5-free:
         desc: 🆓 MiniMax M2.5 — darmowy
 
-      # Free tier
+      # Antigravity — Gemini
+      antigravity/gemini-3.1-pro-high:
+        desc: 🔵 Gemini 3.1 Pro — najlepsze reasoning Google
+      antigravity/gemini-3.5-flash-high:
+        desc: 🔵 Gemini 3.5 Flash — szybki Gemini
+
+      # Groq — błyskawiczna inferencja
+      groq/qwen/qwen3.6-27b:
+        desc: 🟢 Groq Qwen 3.6 — bardzo szybki
+      groq/meta-llama/llama-4-scout-17b-16e-instruct:
+        desc: 🟢 Groq Llama 4 Scout — szybki, OSS
+
+      # Mistral AI
+      mistral/mistral-large-latest:
+        desc: 🔷 Mistral Large — europejski champion reasoning
+      mistral/codestral-latest:
+        desc: 🔷 Codestral — coding specialist
+
+      # NVIDIA
+      nvidia/deepseek-ai/deepseek-v4-pro:
+        desc: 🟩 NVIDIA DeepSeek V4 Pro — reasoning przez NVIDię
+      nvidia/mistralai/mistral-large-3-675b-instruct-2512:
+        desc: 🟩 NVIDIA Mistral Large 3 — 675B parametrów
+
+      # OC (OpenCode) — free tier
+      oc/deepseek-v4-flash-free:
+        desc: 🆓 OC DeepSeek V4 Flash — darmowy
+      oc/nemotron-3-super-free:
+        desc: 🆓 OC Nemotron 3 Super — darmowy
+      oc/qwen3.6-plus-free:
+        desc: 🆓 OC Qwen 3.6 Plus — darmowy, z vision
+
+      # OpenAI direct
+      openai/gpt-5.5:
+        desc: 🤖 GPT-5.5 — najnowszy OpenAI
+      openai/o4-mini:
+        desc: 🤖 o4-mini — reasoning OpenAI
+
+      # Cerebras — szybkie OSS
+      cerebras/gpt-oss-120b:
+        desc: ⚡ Cerebras GPT-OSS-120B — szybki OSS
+      cerebras/zai-glm-4.7:
+        desc: ⚡ Cerebras GLM 4.7 — szybki GLM
+
+      # Free tier (ogólne)
       opencode-zen/nemotron-3-super-free:
         desc: 🆓 Nemotron 3 Super — darmowy
