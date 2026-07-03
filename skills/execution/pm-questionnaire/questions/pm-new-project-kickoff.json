@@ -1,0 +1,75 @@
+{
+  "id": "pm-new-project-kickoff",
+  "title": "Nowy Projekt — Kickoff",
+  "description": "Zbierz kluczowe informacje na start nowego projektu.",
+  "questions": [
+    {
+      "id": "project-name",
+      "question": "Jak nazywa się projekt?",
+      "type": "text",
+      "required": true,
+      "placeholder": "Np. 'UBEK Mobile App'"
+    },
+    {
+      "id": "project-type",
+      "question": "Jaki to typ projektu?",
+      "type": "radio",
+      "options": ["Nowy produkt", "Nowa funkcja", "Redesign", "Research/eksperyment", "Migracja/rewrite"],
+      "required": true
+    },
+    {
+      "id": "problem",
+      "question": "Jaki problem rozwiązuje ten projekt?",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Opisz problem z perspektywy użytkownika..."
+    },
+    {
+      "id": "target-user",
+      "question": "Kto jest głównym użytkownikiem?",
+      "type": "text",
+      "required": true,
+      "placeholder": "Np. 'Studenci 18-25', 'PM w SaaS B2B'"
+    },
+    {
+      "id": "success-metric",
+      "question": "Jak zmierzysz sukces? (1-3 metryki)",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Np. 'DAU +20% w 3 miesiące', 'CSAT > 4.5'"
+    },
+    {
+      "id": "timeline",
+      "question": "Jaki jest timeline?",
+      "type": "radio",
+      "options": ["< 1 miesiąc (sprint)", "1-3 miesiące (kwartał)", "3-6 miesięcy", "6+ miesięcy", "Brak deadline'u"],
+      "required": true
+    },
+    {
+      "id": "team-size",
+      "question": "Ilu ludzi w zespole?",
+      "type": "radio",
+      "options": ["Solo", "2-3", "4-8", "10+"],
+      "required": true
+    },
+    {
+      "id": "risks",
+      "question": "Top 3 ryzyka (co może pójść źle)?",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Np. 'Brak dostępu do API', 'Niska adopcja'"
+    },
+    {
+      "id": "non-goals",
+      "question": "Czego celowo NIE robimy?",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Np. 'Nie robimy mobile app w Q1'"
+    }
+  ],
+  "recommendations": [
+    { "if": { "question": "project-type", "answer": "Research/eksperyment" }, "then": "Zalecam pm-discover przed jakimkolwiek PRD. Zdefiniuj założenia i zaplanuj eksperymenty." },
+    { "if": { "question": "timeline", "answer": "< 1 miesiąc (sprint)" }, "then": "Krótki timeline — użyj pm-sprint-plan i ogranicz scope do MVP." },
+    { "if": { "question": "team-size", "answer": "Solo" }, "then": "Solo projekt — skup się na pm-lean-canvas zamiast pełnego PRD." }
+  ]
+}

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PM Questionnaire</title>
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-card: #1a1a26;
+      --text-primary: #e8e8ed;
+      --text-secondary: #8b8b9e;
+      --accent-primary: #e94560;
+      --accent-secondary: #00d4ff;
+      --border: #2a2a3a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      margin: 0; padding: 20px; min-height: 100vh;
+    }
+    .container {
+      max-width: 720px; margin: 0 auto; padding: 28px;
+      background: var(--bg-secondary); border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    h1 { color: var(--accent-secondary); font-size: 1.5rem; margin: 0 0 4px; }
+    .subtitle { color: var(--text-secondary); font-size: 0.85rem; margin: 0 0 20px; }
+    .progress { width: 100%; height: 6px; background: var(--border); border-radius: 3px; margin-bottom: 24px; overflow: hidden; }
+    .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent-secondary), var(--accent-primary)); width: 0%; border-radius: 3px; transition: width 0.3s ease; }
+    .question-card { padding: 20px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); margin-bottom: 20px; }
+    .question-text { font-size: 1.1rem; font-weight: 500; margin: 0 0 4px; line-height: 1.5; }
+    .question-hint { color: var(--text-secondary); font-size: 0.8rem; margin: 0 0 16px; }
+    .required-mark { color: var(--accent-primary); }
+    textarea, input[type="text"] {
+      width: 100%; padding: 12px; background: var(--bg-primary); color: var(--text-primary);
+      border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; font-family: inherit;
+      resize: vertical; min-height: 80px;
+    }
+    textarea:focus, input:focus { outline: none; border-color: var(--accent-secondary); }
+    .option {
+      display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin: 6px 0;
+      background: var(--bg-primary); border: 1px solid var(--border); border-radius: 6px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .option:hover { border-color: var(--accent-secondary); background: rgba(0,212,255,0.05); }
+    .option.selected { border-color: var(--accent-primary); background: rgba(233,69,96,0.1); }
+    .option input { accent-color: var(--accent-primary); }
+    .option label { cursor: pointer; flex: 1; }
+    .nav-buttons { display: flex; gap: 12px; margin-top: 20px; }
+    .btn {
+      padding: 10px 24px; border: 1px solid var(--border); border-radius: 6px;
+      background: transparent; color: var(--text-primary); cursor: pointer;
+      font-size: 0.9rem; font-family: inherit; transition: all 0.2s;
+    }
+    .btn:hover { border-color: var(--text-secondary); }
+    .btn-primary { background: var(--accent-primary); border-color: var(--accent-primary); }
+    .btn-primary:hover { background: #ff5e78; border-color: #ff5e78; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-secondary { flex: 1; }
+    .counter { color: var(--text-secondary); font-size: 0.8rem; margin-left: auto; align-self: center; }
+    .hidden { display: none; }
+    .results { padding: 8px 0; }
+    .recommendation {
+      padding: 14px 16px; margin: 10px 0; background: var(--bg-card);
+      border-left: 3px solid var(--accent-primary); border-radius: 6px; font-size: 0.9rem;
+    }
+    .answers-json {
+      width: 100%; padding: 14px; background: var(--bg-primary); color: var(--accent-secondary);
+      border: 1px solid var(--border); border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 0.82rem; white-space: pre-wrap; word-break: break-all; margin: 12px 0; max-height: 300px; overflow-y: auto;
+    }
+    .instructions {
+      padding: 12px 16px; background: rgba(0,212,255,0.08); border: 1px solid var(--accent-secondary);
+      border-radius: 6px; font-size: 0.85rem; margin: 12px 0;
+    }
+    .keyboard-hint { color: var(--text-secondary); font-size: 0.75rem; text-align: center; margin-top: 16px; }
+    kbd { background: var(--bg-card); border: 1px solid var(--border); border-radius: 3px; padding: 2px 6px; font-size: 0.75rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="title">PM Questionnaire</h1>
+    <p class="subtitle" id="subtitle"></p>
+    <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+
+    <div id="quiz">
+      <div class="question-card" id="question-card"></div>
+      <div class="nav-buttons">
+        <button class="btn" id="btn-prev" onclick="prevQuestion()">◄ Wstecz</button>
+        <button class="btn btn-primary" id="btn-next" onclick="nextQuestion()">Dalej ►</button>
+        <span class="counter" id="counter"></span>
+      </div>
+      <div class="keyboard-hint">
+        <kbd>Enter</kbd> Dalej · <kbd>Esc</kbd> Wstecz · <kbd>Shift+Enter</kbd> nowa linia
+      </div>
+    </div>
+
+    <div id="results" class="results hidden">
+      <h1>Podsumowanie</h1>
+      <p class="subtitle">Rekomendacje na podstawie odpowiedzi:</p>
+      <div id="recommendations"></div>
+      <div class="instructions">Skopiuj JSON poniżej i wklej w terminalu w czacie PM Agent.</div>
+      <div class="answers-json" id="answers-json"></div>
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="copyToClipboard()">📋 Skopiuj do schowka</button>
+        <button class="btn btn-secondary" onclick="restartQuiz()">↻ Zacznij od nowa</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Default question set — overridden by embedded __QUESTIONNAIRE__ JSON
+    const DEFAULT_SET = {
+      id: "pm-weekly-checkin",
+      title: "Tygodniowy Check-in PM",
+      description: "Szybki check-in — cele, blokery, frameworki.",
+      questions: [
+        { id: "goals", question: "Jakie są Twoje główne cele na ten tydzień? (3 max)", hint: "Np. 'Zakończyć research konkurencji', 'Zdefiniować OKRs dla Q3'", type: "textarea", required: true },
+        { id: "blockers", question: "Czy masz jakieś blokery?", type: "radio", options: ["Tak", "Nie"], required: true },
+        { id: "blockers-desc", question: "Opisz blokery (kto/co/od kiedy):", type: "textarea", required: false, showIf: { question: "blockers", answer: "Tak" } },
+        { id: "frameworks", question: "Jakie frameworki PM chcesz użyć w tym tygodniu?", type: "checkbox", options: ["JTBD", "OKRs", "RICE", "Kano", "SWOT", "Inne"], required: true },
+        { id: "notes", question: "Dodatkowe uwagi (opcjonalnie):", type: "textarea", required: false }
+      ],
+      recommendations: [
+        { if: { question: "frameworks", contains: ["JTBD", "OKRs"] }, then: "Zalecam JTBD dla zrozumienia potrzeb + OKRs dla celów kwartalnych." },
+        { if: { question: "blockers", answer: "Tak" }, then: "Zalecam priorytetyzację blokad — użyj RICE do oceny wpływu." }
+      ]
+    };
+
+    let Q = DEFAULT_SET;
+    try { if (typeof __QUESTIONNAIRE__ !== 'undefined') Q = __QUESTIONNAIRE__; } catch(e) {}
+
+    let currentIdx = 0;
+    let answers = {};
+
+    document.getElementById('title').textContent = Q.title || 'PM Questionnaire';
+    document.getElementById('subtitle').textContent = Q.description || '';
+
+    function getVisibleQuestions() {
+      return Q.questions.filter(q => {
+        if (!q.showIf) return true;
+        const dep = q.showIf;
+        const val = answers[dep.question];
+        if (Array.isArray(dep.answer)) return dep.answer.includes(val);
+        return val === dep.answer;
+      });
+    }
+
+    function renderQuestion() {
+      const visible = getVisibleQuestions();
+      if (currentIdx >= visible.length) { showResults(); return; }
+      if (currentIdx < 0) currentIdx = 0;
+      const q = visible[currentIdx];
+      const card = document.getElementById('question-card');
+      let html = '<p class="question-text">' + q.question;
+      if (q.required) html += ' <span class="required-mark">*</span>';
+      html += '</p>';
+      if (q.hint) html += '<p class="question-hint">' + q.hint + '</p>';
+
+      if (q.type === 'textarea') {
+        html += '<textarea id="input-' + q.id + '" placeholder="' + (q.placeholder || '') + '" onkeydown="handleKey(event)">' + (answers[q.id] || '') + '</textarea>';
+      } else if (q.type === 'radio') {
+        (q.options || []).forEach(function(opt) {
+          var sel = answers[q.id] === opt ? 'selected' : '';
+          html += '<div class="option ' + sel + '" onclick="selectRadio(\'' + q.id + '\',\'' + opt + '\')">';
+          html += '<input type="radio" name="' + q.id + '" value="' + opt + '"' + (answers[q.id] === opt ? ' checked' : '') + '>';
+          html += '<label>' + opt + '</label></div>';
+        });
+      } else if (q.type === 'checkbox') {
+        (q.options || []).forEach(function(opt) {
+          var checked = (answers[q.id] || []).includes(opt);
+          var sel = checked ? 'selected' : '';
+          html += '<div class="option ' + sel + '" onclick="toggleCheckbox(\'' + q.id + '\',\'' + opt + '\')">';
+          html += '<input type="checkbox"' + (checked ? ' checked' : '') + '>';
+          html += '<label>' + opt + '</label></div>';
+        });
+      } else if (q.type === 'text') {
+        html += '<input type="text" id="input-' + q.id + '" placeholder="' + (q.placeholder || '') + '" value="' + (answers[q.id] || '') + '" onkeydown="handleKey(event)">';
+      }
+      card.innerHTML = html;
+      document.getElementById('btn-prev').disabled = currentIdx === 0;
+      document.getElementById('btn-next').textContent = currentIdx === visible.length - 1 ? 'Zakończ ✓' : 'Dalej ►';
+      document.getElementById('counter').textContent = (currentIdx + 1) + ' / ' + visible.length;
+      updateProgress();
+      setTimeout(function() { var inp = document.getElementById('input-' + q.id); if (inp) inp.focus(); }, 50);
+    }
+
+    function selectRadio(qid, opt) { answers[qid] = opt; renderQuestion(); }
+    function toggleCheckbox(qid, opt) {
+      var arr = answers[qid] || [];
+      var i = arr.indexOf(opt);
+      if (i >= 0) arr.splice(i, 1); else arr.push(opt);
+      answers[qid] = arr; renderQuestion();
+    }
+    function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); nextQuestion(); } }
+
+    function saveCurrentAnswer() {
+      var visible = getVisibleQuestions();
+      var q = visible[currentIdx];
+      if (!q) return true;
+      var val;
+      if (q.type === 'textarea' || q.type === 'text') {
+        var el = document.getElementById('input-' + q.id);
+        val = el ? el.value : '';
+      } else { val = answers[q.id]; }
+      if (q.required && !val) { alert('To pole jest wymagane!'); return false; }
+      answers[q.id] = val; return true;
+    }
+
+    function nextQuestion() {
+      if (!saveCurrentAnswer()) return;
+      var visible = getVisibleQuestions();
+      currentIdx++;
+      if (currentIdx >= visible.length) showResults(); else renderQuestion();
+    }
+    function prevQuestion() { if (currentIdx > 0) { currentIdx--; renderQuestion(); } }
+
+    function updateProgress() {
+      var visible = getVisibleQuestions();
+      var pct = ((currentIdx + 1) / visible.length) * 100;
+      document.getElementById('progress-bar').style.width = pct + '%';
+    }
+
+    function showResults() {
+      document.getElementById('quiz').classList.add('hidden');
+      document.getElementById('results').classList.remove('hidden');
+      var recDiv = document.getElementById('recommendations');
+      var recsHtml = '';
+      (Q.recommendations || []).forEach(function(rec) {
+        var ans = answers[rec.if.question];
+        var match = false;
+        if (rec.if.answer) match = ans === rec.if.answer;
+        else if (rec.if.contains && Array.isArray(ans)) match = rec.if.contains.some(function(item) { return ans.includes(item); });
+        if (match) recsHtml += '<div class="recommendation">' + rec.then + '</div>';
+      });
+      if (!recsHtml) recsHtml = '<div class="recommendation">Brak specyficznych rekomendacji. Kontynuuj z odpowiedziami.</div>';
+      recDiv.innerHTML = recsHtml;
+      document.getElementById('answers-json').textContent = JSON.stringify(answers, null, 2);
+    }
+
+    function copyToClipboard() {
+      var json = JSON.stringify(answers, null, 2);
+      navigator.clipboard.writeText(json).then(function() {
+        var btn = event.target; var orig = btn.textContent;
+        btn.textContent = '✅ Skopiowane!';
+        setTimeout(function() { btn.textContent = orig; }, 2000);
+      }).catch(function() {
+        var ta = document.createElement('textarea'); ta.value = json;
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+        document.body.removeChild(ta); alert('Skopiowano do schowka!');
+      });
+    }
+
+    function restartQuiz() {
+      currentIdx = 0; answers = {};
+      document.getElementById('quiz').classList.remove('hidden');
+      document.getElementById('results').classList.add('hidden');
+      renderQuestion();
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (document.getElementById('results').classList.contains('hidden')) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          if (e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'INPUT') { e.preventDefault(); nextQuestion(); }
+        } else if (e.key === 'Escape') { prevQuestion(); }
+      }
+    });
+
+    renderQuestion();
+  </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+{
+  "id": "pm-weekly-checkin",
+  "title": "Tygodniowy Check-in PM",
+  "description": "Szybki check-in dla Product Managera — cele, blokery, frameworki.",
+  "questions": [
+    {
+      "id": "goals",
+      "question": "Jakie są Twoje **główne cele** na ten tydzień? (3 max)",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Np. 'Zakończyć research konkurencji', 'Zdefiniować OKRs dla Q3'",
+      "next": {
+        "if": ["blockers"],
+        "then": "blockers-question"
+      }
+    },
+    {
+      "id": "blockers",
+      "question": "Czy masz jakieś **blokery**?",
+      "type": "radio",
+      "options": ["Tak", "Nie"],
+      "required": true
+    },
+    {
+      "id": "blockers-question",
+      "question": "Opisz **blokery** (kto/co/od kiedy):",
+      "type": "textarea",
+      "required": false,
+      "showIf": {
+        "question": "blockers",
+        "answer": "Tak"
+      }
+    },
+    {
+      "id": "frameworks",
+      "question": "Jakie **frameworki PM** chcesz użyć w tym tygodniu?",
+      "type": "checkbox",
+      "options": ["JTBD", "OKRs", "RICE", "Kano", "SWOT", "Inne"],
+      "required": true
+    },
+    {
+      "id": "notes",
+      "question": "Dodatkowe uwagi (opcjonalnie):",
+      "type": "textarea",
+      "required": false
+    }
+  ],
+  "recommendations": [
+    {
+      "if": {
+        "question": "frameworks",
+        "contains": ["JTBD", "OKRs"]
+      },
+      "then": "Zalecam JTBD dla zrozumienia potrzeb użytkowników + OKRs dla celów kwartalnych."
+    },
+    {
+      "if": {
+        "question": "blockers",
+        "answer": "Tak"
+      },
+      "then": "Zalecam priorytetyzację blokad — użyj frameworku RICE do oceny wpływu."
+    }
+  ]
+}

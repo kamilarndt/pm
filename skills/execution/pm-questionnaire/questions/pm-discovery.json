@@ -1,0 +1,70 @@
+{
+  "id": "pm-discovery",
+  "title": "Product Discovery — Pytania",
+  "description": "Zbierz kontekst do przeprowadzenia discovery dla nowego pomysłu.",
+  "questions": [
+    {
+      "id": "idea",
+      "question": "Opisz swój pomysł w 2-3 zdaniach",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Co budujesz, dla kogo, dlaczego..."
+    },
+    {
+      "id": "user-segment",
+      "question": "Kto jest docelowym użytkownikiem?",
+      "type": "radio",
+      "options": ["Konsumenci (B2C)", "Firmy (B2B)", "Deweloperzy (Dev)", "Internal (w firmie)", "Nie wiem jeszcze"],
+      "required": true
+    },
+    {
+      "id": "problem-exists",
+      "question": "Czy wiesz, że ten problem naprawdę istnieje?",
+      "type": "radio",
+      "options": ["Tak — mam dane/wywiady", "Może — są sygnały", "Nie — to hipoteza"],
+      "required": true
+    },
+    {
+      "id": "evidence",
+      "question": "Jakie masz dowody? (jeśli jakiekolwiek)",
+      "type": "textarea",
+      "required": false,
+      "showIf": { "question": "problem-exists", "answer": "Tak — mam dane/wywiady" },
+      "placeholder": "Np. '10 wywiadów, NPS -20, 5 skarg supportu'"
+    },
+    {
+      "id": "competitors",
+      "question": "Znane rozwiązania konkurencji?",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Np. 'Notion, Linear, Jira...'"
+    },
+    {
+      "id": "monetization",
+      "question": "Jak planujesz zarabiać?",
+      "type": "checkbox",
+      "options": ["Subskrypcja", "Freemium", "One-time", "Reklama", "B2B contract", "Nie wiem"],
+      "required": true
+    },
+    {
+      "id": "constraints",
+      "question": "Główne ograniczenia?",
+      "type": "checkbox",
+      "options": ["Budżet", "Czas", "Tech stack", "Zespół", "Regulacje/legal", "Brak"],
+      "required": true
+    },
+    {
+      "id": "next-step",
+      "question": "Co chcesz zrobić dalej?",
+      "type": "radio",
+      "options": ["Opportunity Solution Tree", "Zmapuj założenia", "Zaplanuj eksperyment", "Napisz PRD", "Research konkurencji"],
+      "required": true
+    }
+  ],
+  "recommendations": [
+    { "if": { "question": "problem-exists", "answer": "Nie — to hipoteza" }, "then": "Zalecam pm-identify-assumptions-new — zmapuj krytyczne założenia zanim cokolwiek zbudujesz." },
+    { "if": { "question": "next-step", "answer": "Opportunity Solution Tree" }, "then": "Użyj pm-opportunity-solution-tree — ułóż okazje → rozwiązania → eksperymenty." },
+    { "if": { "question": "next-step", "answer": "Research konkurencji" }, "then": "Użyj pm-competitor-analysis + pm-broad-parallel-search." },
+    { "if": { "question": "monetization", "contains": ["Nie wiem"] }, "then": "Zalecam pm-monetization-strategy — zbadaj modele przychodów." }
+  ]
+}
