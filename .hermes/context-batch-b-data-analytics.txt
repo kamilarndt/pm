@@ -1,0 +1,23 @@
+SOURCE: /root/pm-skills/pm-data-analytics/
+TARGET: /root/pm/skills/data-analytics/
+
+Convert ALL Claude Code skills and commands to Hermes SKILL.md format.
+
+SKILLS to convert (3):
+- cohort-analysis
+- ab-test-analysis
+- sql-queries
+
+COMMANDS to convert (3):
+- analyze-cohorts
+- write-query
+- analyze-test
+
+CONVERSION RULES:
+1. Skills: keep frontmatter as-is, add metadata.hermes.tags: [product-management, data-analytics]
+2. Remove $ARGUMENTS from skill bodies
+3. Commands: convert to SKILL.md with description from frontmatter
+4. Remove / slashes, replace with natural language
+5. Add "Użycie:" from argument-hint
+6. Keep all workflow steps, templates, notes
+7. Save as skills/data-analytics/<name>/SKILL.md

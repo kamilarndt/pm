@@ -1,0 +1,5 @@
+.env
+.ahe/
+*.Zone.Identifier
+__pycache__/
+.DS_Store

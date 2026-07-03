@@ -1,0 +1,27 @@
+SOURCE: /root/pm-skills/pm-marketing-growth/
+TARGET: /root/pm/skills/marketing-growth/
+
+Convert ALL Claude Code skills and commands to Hermes SKILL.md format.
+
+SKILLS to convert (5):
+- positioning-ideas
+- marketing-ideas
+- product-name
+- north-star-metric
+- value-prop-statements
+
+COMMANDS to convert (2):
+- market-product
+- north-star (DUPLICATE → save as north-star-cmd)
+
+DUPLICATE names:
+- north-star → command saved as north-star-cmd
+
+CONVERSION RULES:
+1. Skills: keep frontmatter as-is, add metadata.hermes.tags: [product-management, marketing-growth]
+2. Remove $ARGUMENTS from skill bodies
+3. Commands: convert to SKILL.md with description from frontmatter
+4. Remove / slashes, replace with natural language
+5. Add "Użycie:" from argument-hint
+6. Keep all workflow steps, templates, notes
+7. Save as skills/marketing-growth/<name>/SKILL.md

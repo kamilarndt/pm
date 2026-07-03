@@ -1,0 +1,30 @@
+SOURCE: /root/pm-skills/pm-market-research/
+TARGET: /root/pm/skills/market-research/
+
+Convert ALL Claude Code skills and commands to Hermes SKILL.md format.
+
+SKILLS to convert (7):
+- competitor-analysis
+- market-sizing
+- user-personas
+- customer-journey-map
+- market-segments
+- user-segmentation
+- sentiment-analysis
+
+COMMANDS to convert (3):
+- analyze-feedback
+- research-users
+- competitive-analysis (DUPLICATE → save as competitive-analysis-cmd)
+
+DUPLICATE names:
+- competitive-analysis → command saved as competitive-analysis-cmd
+
+CONVERSION RULES:
+1. Skills: keep frontmatter as-is, add metadata.hermes.tags: [product-management, market-research]
+2. Remove $ARGUMENTS from skill bodies
+3. Commands: convert to SKILL.md with description from frontmatter
+4. Remove / slashes, replace with natural language
+5. Add "Użycie:" from argument-hint
+6. Keep all workflow steps, templates, notes, Further Reading
+7. Save as skills/market-research/<name>/SKILL.md

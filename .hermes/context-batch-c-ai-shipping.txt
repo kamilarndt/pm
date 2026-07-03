@@ -1,0 +1,24 @@
+SOURCE: /root/pm-skills/pm-ai-shipping/
+TARGET: /root/pm/skills/ai-shipping/
+
+Convert ALL Claude Code skills and commands to Hermes SKILL.md format.
+
+SKILLS to convert (2):
+- shipping-artifacts
+- intended-vs-implemented
+
+COMMANDS to convert (5):
+- derive-tests
+- document-app
+- ship-check
+- security-audit-static
+- performance-audit-static
+
+CONVERSION RULES:
+1. Skills: keep frontmatter as-is, add metadata.hermes.tags: [product-management, ai-shipping]
+2. Remove $ARGUMENTS from skill bodies
+3. Commands: convert to SKILL.md with description from frontmatter
+4. Remove / slashes, replace with natural language
+5. Add "Użycie:" from argument-hint
+6. Keep all workflow steps, templates, notes
+7. Save as skills/ai-shipping/<name>/SKILL.md

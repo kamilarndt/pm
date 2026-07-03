@@ -1,0 +1,26 @@
+SOURCE: /root/pm-skills/pm-go-to-market/
+TARGET: /root/pm/skills/go-to-market/
+
+Convert ALL Claude Code skills and commands to Hermes SKILL.md format.
+
+SKILLS to convert (6):
+- ideal-customer-profile
+- gtm-strategy
+- growth-loops
+- gtm-motions
+- beachhead-segment
+- competitive-battlecard
+
+COMMANDS to convert (3):
+- plan-launch
+- battlecard
+- growth-strategy
+
+CONVERSION RULES:
+1. Skills: keep frontmatter as-is, add metadata.hermes.tags: [product-management, go-to-market]
+2. Remove $ARGUMENTS from skill bodies
+3. Commands: convert to SKILL.md with description from frontmatter
+4. Remove / slashes, replace with natural language
+5. Add "Użycie:" from argument-hint
+6. Keep all workflow steps, templates, notes
+7. Save as skills/go-to-market/<name>/SKILL.md
