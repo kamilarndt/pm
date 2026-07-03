@@ -1,12 +1,14 @@
 _config_version: 32
 
 model:
-  default: openrouter/anthropic/claude-sonnet-4
-  provider: openrouter
+  default: auto/best-coding
+  provider: custom:omniroute
   api_mode: chat_completions
 fallback_providers:
-  - provider: openrouter
-    model: openrouter/google/gemini-2.5-flash-preview
+  - provider: custom:omniroute
+    model: auto/best-fast
+  - provider: custom:omniroute
+    model: auto/cheap
 
 toolsets:
   - terminal
@@ -43,8 +45,9 @@ web:
 
 auxiliary:
   vision:
-    provider: openrouter
+    provider: custom:omniroute
     model: openrouter/qwen/qwen3-vl-30b-a3b-instruct
+    base_url: http://localhost:20128/v1
   compression:
     provider: openrouter
     model: openrouter/google/gemini-2.0-flash-001
@@ -74,3 +77,19 @@ hooks:
   on_session_start:
     - command: echo "[PM Agent] Loaded. PM skills + ResearchOS ready."
       timeout: 5
+
+custom_providers:
+  - name: OmniRoute
+    base_url: http://localhost:20128/v1
+    api_key: not-needed
+    model: auto/best-coding
+    discover_models: false
+    models:
+      auto/best-coding:
+        desc: Najlepszy do kodowania
+      auto/best-reasoning:
+        desc: Najlepszy do rozumowania
+      auto/best-fast:
+        desc: Najszybszy
+      auto/cheap:
+        desc: Tani
