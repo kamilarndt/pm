@@ -111,35 +111,15 @@ custom_providers:
       auto/smart:
         desc: 🤖 Routing przez smart provider
 
-      # Anthropic Claude (opencode-zen)
-      opencode-zen/claude-opus-4-7:
-        desc: 🟣 Claude Opus 4.7 — najlepszy reasoning, strategia, deep research
-      opencode-zen/claude-sonnet-4-6:
-        desc: 🟣 Claude Sonnet 4.6 — najlepszy balans, PRD, execution
-      opencode-zen/claude-haiku-4-5:
-        desc: 🟣 Claude Haiku 4.5 — szybki, tani, daily tasks
-
-      # OpenAI GPT (opencode-zen)
-      opencode-zen/gpt-5.5:
-        desc: 🟢 GPT-5.5 — najnowszy OpenAI
-      opencode-zen/gpt-5.5-pro:
-        desc: 🟢 GPT-5.5 Pro — pro tier
-      opencode-zen/gpt-5.4:
-        desc: 🟢 GPT-5.4 — solidny all-rounder
-
-      # Google Gemini (opencode-zen)
-      opencode-zen/gemini-3.1-pro:
-        desc: 🔵 Gemini 3.1 Pro — reasoning, analiza
-      opencode-zen/gemini-3.5-flash:
-        desc: 🔵 Gemini 3.5 Flash — szybki, tani
-
-      # DeepSeek (opencode-go + if)
+      # DeepSeek (opencode-go + opencode-zen free)
       opencode-go/deepseek-v4-pro:
         desc: 🟠 DeepSeek V4 Pro — mocny reasoning
       opencode-go/deepseek-v4-flash:
         desc: 🟠 DeepSeek V4 Flash — szybki, codzienna praca
       if/deepseek-v3.2:
         desc: 🟠 DeepSeek V3.2 — alternatywa
+      opencode-zen/deepseek-v4-flash-free:
+        desc: 🆓 DeepSeek V4 Flash — darmowy
 
       # Qwen (opencode-go + if)
       opencode-go/qwen3.7-max:
@@ -148,6 +128,8 @@ custom_providers:
         desc: 🟡 Qwen 3.7 Plus — solidny all-rounder
       if/qwen3-max:
         desc: 🟡 Qwen3 Max — z vision
+      opencode-zen/qwen3.6-plus-free:
+        desc: 🆓 Qwen3.6 Plus — darmowy, z vision
 
       # Kimi (opencode-go)
       opencode-go/kimi-k2.7-code:
@@ -159,16 +141,12 @@ custom_providers:
       opencode-go/glm-5.2:
         desc: 💜 GLM 5.2 — najnowszy Zhipu
 
-      # Minimax (opencode-go)
+      # Minimax (opencode-go + opencode-zen free)
       opencode-go/minimax-m3:
         desc: 🤍 MiniMax M3 — najnowszy, z vision
-
-      # xAI Grok (opencode-zen)
-      opencode-zen/grok-build-0.1:
-        desc: 🤖 Grok Build 0.1 — build agent
+      opencode-zen/minimax-m2.5-free:
+        desc: 🆓 MiniMax M2.5 — darmowy
 
       # Free tier
-      opencode-zen/deepseek-v4-flash-free:
-        desc: 🆓 DeepSeek V4 Flash — darmowy
       opencode-zen/nemotron-3-super-free:
         desc: 🆓 Nemotron 3 Super — darmowy
