@@ -1,6 +1,6 @@
 name: pm
 version: 1.0.0
-description: "PM Agent — 115 skills (111 PM frameworks + 4 research) + 3 cron blueprints. From discovery to strategy, execution, launch, growth, shipping, and multi-source research."
+description: "PM Agent — 113 skills (all pm-* prefixed) + 3 cron blueprints + ResearchOS. From discovery to strategy, execution, launch, growth, shipping, and multi-source research."
 hermes_requires: ">=0.12.0"
 author: "Kamil Arndt (PM Skills based on phuryn/pm-skills by Paweł Huryn)"
 license: "MIT"
